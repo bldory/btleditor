@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hex Editor</title>
+    <style>
+      body {
+        background-color: #181818;
+        color: #fff;
+        margin: 0;
+        overflow: hidden;
+        padding: 20px;
+      }
+      .hex-editor {
+        font-family: monospace;
+        width: 400px;
+        font-size: 33px;
+        padding: 0px 15px;
+        color: #fffa;
+        text-align: left;
+        height: 100vh;
+        position: relative;
+        top: 0;
+        left: 0;
+        overflow-y: scroll;
+        float: left;
+        margin: 0;
+        display: grid;
+        grid-template-columns: repeat(8, auto);
+        margin: -20px;
+        margin-right: 25px;
+      }
+      .cell {
+        display: inline-block;
+        text-align: center;
+        cursor: pointer;
+        background-color: rgb(50, 50, 50);
+        color: rgb(255, 255, 255);
+        border: 3px solid #222;
+        margin: 1px;
+      }
+      #selected {
+        border-color: #f00;
+      }
+      .building {
+        border-color: #fd0;
+      }
+      .army {
+        border-color: #0a0;
+      }
+      .building.army {
+        border-left-color: #0a0;
+        border-right-color: #0a0;
+        border-top-color: #fd0;
+        border-bottom-color: #fd0;
+      }
+      .trap {
+        border-color: #0a0;
+      }
+      #tooltip {
+        display: none;
+        position: absolute;
+        background: #000;
+        cursor: pointer;
+        border: 2px solid #888;
+        padding: 10px 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="hexEditor" class="hex-editor"></div>
+    <label for="fileInput">Import .btl</label><br />
+    <input type="file" id="fileInput" />
+    <div id="tooltip">
+      <div id="buildingText"></div>
+      <div id="tooltipText"></div>
+      <canvas width="270px" height="270px" id="buildingCanvas"></canvas>
+    </div>
+    <script src="./btl.js"></script>
+  </body>
+</html>
