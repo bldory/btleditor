@@ -308,6 +308,9 @@ let tooltip = document.getElementById("tooltip");
 let tooltipText = document.getElementById("tooltipText");
 let buildingText = document.getElementById("buildingText");
 
+let MapMarginH;
+let MapMarginV;
+
 const canvas = document.querySelector("canvas");
 //const canvas = document.getElementById("buildingCanvas");
 const ctx = canvas.getContext("2d");
@@ -404,6 +407,8 @@ function initInfo() {
   MapW = parseInt(getCell(16).byte, 16);
   MapH = parseInt(getCell(20).byte, 16);
   MapSize = MapW * MapH;
+  MapMarginH = getHexValue(8, 2);
+  MapMarginV = getHexValue(12, 2) * MapW;
   countryCount = parseInt(getCell(24).byte, 16);
   initCountry();
   buildingCount = getHexValue(28, 2);
@@ -451,7 +456,7 @@ function setCellInfo(
   let img = new Image();
   for (let i = 0; i < count; i++) {
     let coordinate = getHexValue(pos + i * size, 2);
-    let coorCell = getCell(ownershipPos + coordinate - 296);
+    let coorCell = getCell(ownershipPos + coordinate - MapMarginV);
     let cellNum = getHexValue(index + pos + i * size, 2) - 1;
     coorCell.setColor(getCountryColor(parseInt(coorCell.byte, 16)));
     coorCell.cell.classList.add(name);
@@ -496,7 +501,7 @@ function setCellInfo(
 function setTrap() {
   for (let i = 0; i < trapCount; i++) {
     let coor = getHexValue(trapPos + i * 12, 2);
-    coorCell = cellList[ownershipPos + coor - 296];
+    coorCell = cellList[ownershipPos + coor - MapMarginV];
     coorCell.setColor(getCountryColor(getHexValue(2 + trapPos + i * 12, 2)));
     coorCell.cell.classList.add("trap");
     coorCell.cell.addEventListener("mouseenter", () => {
